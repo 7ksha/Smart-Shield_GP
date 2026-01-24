@@ -188,13 +188,6 @@ We appreciate your contributions and thank you for helping to improve smartshiel
 
 ---
 
-# Documentation
-[User documentation](https://stratospherelinuxips.readthedocs.io/en/develop/)
-
-[Code docs](https://stratospherelinuxips.readthedocs.io/en/develop/code_documentation.html )
-
----
-
 # Troubleshooting
 
 If you can't listen to an interface without sudo, foe example when zeek is throwing the following error:
