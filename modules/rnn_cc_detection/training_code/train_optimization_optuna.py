@@ -13,7 +13,6 @@ import optuna
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Dropout, Input, Reshape
 import matplotlib.pyplot as plt
-# Author sebastian garcia, eldraco@gmail.com
 
 def get_model_GRU_int_encode (vocabulary_size, embed_dim, first_layer, second_layer, dropout_rate):
     """

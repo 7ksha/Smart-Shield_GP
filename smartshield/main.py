@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import contextlib
 import json
 import multiprocessing
@@ -11,7 +11,7 @@ import subprocess
 import sys
 import time
 from datetime import datetime
-#from distutils.dir_util import copy_tree
+from distutils.dir_util import copy_tree
 from typing import Set
 import logging
 

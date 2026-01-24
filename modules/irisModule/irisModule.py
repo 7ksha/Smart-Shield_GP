@@ -15,8 +15,7 @@ class IrisModule(IModule):
     # Name: short name of the module. Do not use spaces
     name = "Iris"
     description = "Global P2P module cooperating with Fides"
-    authors = ["David Otta"]
-    process = None
+         process = None
     stopFlag = False
 
     def init(self):

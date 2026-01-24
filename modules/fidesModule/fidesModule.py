@@ -39,7 +39,6 @@ class FidesModule(IModule):
 
     name = "Fides"
     description = "Trust computation module for P2P interactions."
-    authors = ["David Otta", "Lukáš Forst"]
 
     def init(self):
         self.__output = self.logger

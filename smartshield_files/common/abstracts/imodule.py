@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import sys
 import traceback
 import warnings
@@ -26,8 +26,7 @@ class IModule(ABC, Process):
 
     name = "IModule"
     description = "Template module"
-    authors = ["Template Author"]
-    # should be filled with the channels each module subscribes to
+         # should be filled with the channels each module subscribes to
     channels = {}
 
     def __init__(

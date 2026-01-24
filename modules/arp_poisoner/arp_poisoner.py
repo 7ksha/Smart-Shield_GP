@@ -1,5 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+
 import logging
 import os
 import subprocess
@@ -28,7 +27,6 @@ def generate_fake_mac():
 class ARPPoisoner(IModule):
     name = "ARP Poisoner"
     description = "ARP poisons attackers to isolate them from the network."
-    authors = ["Alya Gomaa"]
 
     def init(self):
         self.c1 = self.db.subscribe("new_blocking")

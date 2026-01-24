@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 from smartshield_files.common.abstracts.imodule import IModule
 import socket
 import json
@@ -19,7 +19,6 @@ class Module(IModule):
     # Name: short name of the module. Do not use spaces
     name = "CYST"
     description = "Communicates with CYST simulation framework"
-    authors = ["Alya Gomaa"]
 
     def init(self):
         self.port = None

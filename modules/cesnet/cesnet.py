@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import os
 import json
 import time
@@ -25,7 +25,6 @@ from smartshield_files.common.idea_format import (
 class CESNET(IModule):
     name = "CESNET"
     description = "Send and receive alerts from warden servers."
-    authors = ["Alya Gomaa"]
 
     def init(self):
         self.read_configuration()

@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import json
 from typing import List
 
@@ -30,8 +30,7 @@ class NetworkDiscovery(IModule):
 
     name = "Network Discovery"
     description = "Detect Horizonal, Vertical, ICMP and DHCP Scans."
-    authors = ["Sebastian Garcia", "Alya Gomaa"]
-
+     
     def init(self):
         self.horizontal_ps = HorizontalPortscan(self.db)
         self.vertical_ps = VerticalPortscan(self.db)

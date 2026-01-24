@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 """
 Data classes for all types of zeek flows
 """
@@ -48,7 +48,7 @@ class Conn(BaseFlow):
     dmac: str = ""
 
     # this is for when you give flows labeled by the netflow labeler
-    # https://github.com/stratosphereips/netflowlabeler
+
     ground_truth_label: str = ""
     detailed_ground_truth_label: str = ""
 

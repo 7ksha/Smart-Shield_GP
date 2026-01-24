@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 # Ths is a template module for you to copy and create your own smartshield module
 # Instructions
 # 1. Create a new folder on ./modules with the name of your template. Example:
@@ -22,8 +22,7 @@ class Template(IModule):
     # Name: short name of the module. Do not use spaces
     name = "Template"
     description = "Template module"
-    authors = ["Template Author"]
-
+     
     def init(self):
         # To which channels do you want to subscribe? When a message
         # arrives on the channel the module will receive a msg

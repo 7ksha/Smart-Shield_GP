@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 # common imports for all modules
 from smartshield_files.common.parsers.config_parser import ConfigParser
 from smartshield_files.common.smartshield_utils import utils

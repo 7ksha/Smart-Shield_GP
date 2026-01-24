@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 from typing import (
     Union,
     Optional,
@@ -46,8 +46,7 @@ class IPInfo(AsyncModule):
     # Name: short name of the module. Do not use spaces
     name = "IP Info"
     description = "Get different info about an IP/MAC address"
-    authors = ["Alya Gomaa", "Sebastian Garcia"]
-
+     
     def init(self):
         """This will be called when initializing this module"""
         self.pending_mac_queries = multiprocessing.Queue()

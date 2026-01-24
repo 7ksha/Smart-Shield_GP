@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 from typing import Dict, Any
 import json
 from uuid import uuid4
@@ -22,8 +22,7 @@ from smartshield_files.core.structures.evidence import (
 class URLhaus:
     name = "URLhaus"
     description = "URLhaus lookups of URLs and hashes"
-    authors = ["Alya Gomaa"]
-
+     
     def __init__(self, db):
         self.db = db
         self.create_urlhaus_session()

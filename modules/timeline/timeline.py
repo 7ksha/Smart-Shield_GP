@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import traceback
 import sys
 import time
@@ -22,8 +22,7 @@ class Timeline(IModule):
         "Creates kalipso timeline of what happened in the"
         " network based on flows and available data"
     )
-    authors = ["Sebastian Garcia", "Alya Gomaa"]
-
+     
     def init(self):
         self.read_configuration()
         self.c1 = self.db.subscribe("new_flow")

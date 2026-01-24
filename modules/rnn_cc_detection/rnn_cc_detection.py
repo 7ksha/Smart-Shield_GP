@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import warnings
 import json
 from typing import Dict
@@ -35,8 +35,7 @@ class CCDetection(IModule):
     # Name: short name of the module. Do not use spaces
     name = "RNN C&C Detection"
     description = "Detect C&C channels based on behavioral letters"
-    authors = ["Sebastian Garcia", "Kamila Babayeva", "Ondrej Lukas"]
-
+     
     def init(self):
         self.subscribe_to_channels()
         self.exporter = StratoLettersExporter(self.db)

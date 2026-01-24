@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import asyncio
 import datetime
 import json
@@ -32,8 +32,7 @@ from smartshield_files.core.helpers.whitelist.whitelist import Whitelist
 class UpdateManager(IModule):
     name = "Update Manager"
     description = "Update Threat Intelligence files"
-    authors = ["Kamila Babayeva", "Alya Gomaa"]
-
+     
     def init(self):
         self.read_configuration()
         # Update file manager

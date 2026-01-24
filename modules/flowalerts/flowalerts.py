@@ -1,5 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+
 import asyncio
 import inspect
 from asyncio import Task
@@ -25,7 +24,6 @@ class FlowAlerts(AsyncModule):
         "Alerts about flows: long connection, successful ssh, "
         "password guessing, self-signed certificate, data exfiltration, etc."
     )
-    authors = ["Kamila Babayeva", "Sebastian Garcia", "Alya Gomaa"]
 
     def init(self):
         self.subscribe_to_channels()

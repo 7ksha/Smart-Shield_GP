@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import ipaddress
 import multiprocessing
 import os
@@ -42,8 +42,7 @@ class ThreatIntel(IModule, URLhaus, Spamhaus):
         "Check if the source IP or destination IP"
         " are in a malicious list of IPs"
     )
-    authors = ["Frantisek Strasak, Sebastian Garcia, Alya Gomaa"]
-
+     
     def init(self):
         """Initializes the ThreatIntel module. This includes setting up database
         subscriptions for threat intelligence and new downloaded file notifications,

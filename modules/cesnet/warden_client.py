@@ -1,8 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-#
-# Copyright (C) 2011-2015 Cesnet z.s.p.o
-# Use of this source is governed by a 3-clause BSD-style license, see LICENSE file.
 
 import json
 import logging

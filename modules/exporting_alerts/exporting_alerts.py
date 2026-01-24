@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import json
 
 from modules.exporting_alerts.slack_exporter import SlackExporter
@@ -17,7 +17,6 @@ class ExportingAlerts(IModule):
 
     name = "Exporting Alerts"
     description = "Export alerts to slack or STIX format"
-    authors = ["Alya Gomaa"]
 
     def init(self):
         self.slack = SlackExporter(self.logger, self.db)

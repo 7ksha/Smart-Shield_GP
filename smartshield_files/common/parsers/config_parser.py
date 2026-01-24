@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 from datetime import timedelta
 import sys
 import ipaddress
@@ -17,8 +17,7 @@ from smartshield_files.common.smartshield_utils import utils
 class ConfigParser(object):
     name = "ConfigParser"
     description = "Parse and sanitize smartshield.yaml values. used by all modules"
-    authors = ["Alya Gomaa"]
-
+     
     def __init__(self):
         configfile: str = self.get_config_file()
         self.config = self.read_config_file(configfile)

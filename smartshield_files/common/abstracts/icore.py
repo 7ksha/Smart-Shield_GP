@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import traceback
 from multiprocessing import Process
 
@@ -13,8 +13,7 @@ class ICore(IModule, Process):
 
     name = ""
     description = "Short description of the core class purpose"
-    authors = ["Name of the author creating the class"]
-
+     
     def __init__(self, *args, **kwargs):
         """
         contains common initializations in all core files in

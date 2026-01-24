@@ -1,0 +1,101 @@
+# Build Iris
+FROM golang:1.17 AS build
+
+# Set Go modules to "on" to avoid issues with GOPATH
+ENV GO111MODULE=on
+ENV GOPATH=""
+
+COPY iris/go.mod ./
+COPY iris/go.sum ./
+
+RUN go mod download
+
+COPY iris/cmd ./cmd
+COPY iris/pkg ./pkg
+
+RUN go build -o /iris/iris cmd/peercli.go
+
+FROM ubuntu:22.04
+# To avoid user interaction when installing libraries
+ENV DEBIAN_FRONTEND=noninteractive
+# Blocking module requirement to avoid using sudo
+ENV IS_IN_A_DOCKER_CONTAINER=True
+# destionation dir for smartshield inside the container
+ENV smartshield_DIR=/StratosphereLinuxIPS
+
+ENV NODE_VERSION=22.5.0
+ENV NVM_DIR=/root/.nvm
+
+# use bash instead of sh
+SHELL ["/bin/bash", "-c"]
+
+# Switch to smartshield installation dir on login.
+WORKDIR ${smartshield_DIR}
+
+COPY . $smartshield_DIR
+
+RUN apt-get update -o Acquire::Retries=5 -o Acquire::https::No-Cache=True \
+    && apt-get install -y --no-install-recommends --fix-broken --fix-missing \
+    $(cat install/apt_dependencies.txt) \
+    lsb-release \
+    software-properties-common \
+    vim \
+    less \
+    unzip \
+    nano \
+    tree \
+    tmux \
+    && echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_22.04/ /' |  tee /etc/apt/sources.list.d/security:zeek.list \
+    && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_22.04/Release.key | gpg --dearmor |  tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null \
+    && apt update \
+    && apt-get install -y --no-install-recommends --fix-missing \
+    zeek-8.0 \
+    npm \
+    && ln -s /opt/zeek/bin/zeek /usr/local/bin/bro \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash - \
+    && export NVM_DIR="$HOME/.nvm" \
+    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  \
+    && nvm install 22 \
+    && apt purge -y  redis-server redis # we'll be compiling it manually
+
+
+
+# why are we compiling redis instead od just using apt?
+# to support running smartshield on the rpi (arm64). the rpi uses jemmalloc by default, which expects a different page size
+# than the default on x86_64
+WORKDIR /
+RUN pip3 install --no-cache-dir --upgrade pip \
+    && curl -O https://download.redis.io/redis-stable.tar.gz \
+    && tar xzf redis-stable.tar.gz \
+    && cd redis-stable \
+    && make distclean \
+    && make MALLOC=libc
+
+ENV PATH="$PATH:/redis-stable/src"
+
+
+
+
+WORKDIR ${smartshield_DIR}
+# Retrieve Iris
+COPY --from=build /iris/iris ./modules/irisModule
+
+
+RUN  pip install --ignore-installed --no-cache-dir -r install/requirements.txt \
+    && chmod 774 smartshield.py \
+    && git init \
+    && git remote add origin https://github.com/stratosphereips/StratosphereLinuxIPS.git \
+    && cd modules/kalipso \
+    && npm install \
+    && cd ../../p2p4smartshield \
+    && go build
+
+ENV PATH="$PATH:/StratosphereLinuxIPS/p2p4smartshield/"
+
+
+WORKDIR ${smartshield_DIR}
+
+
+CMD /bin/bash

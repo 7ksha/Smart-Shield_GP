@@ -2,7 +2,7 @@
 # File format:
 # "URL", "Threat level", "tags"
 #        Feed: URL from where to get Threat Intelligence data.
-#               Each of these files will be downloaded and added to slips.
+#               Each of these files will be downloaded and added to smartshield.
 #        Threat Level: supported values are info, low , medium, high or critical.
 #        Tags: which category is this feed e.g. phishing, adtrackers, etc...
 #               format is ['tag1', 'tag2']

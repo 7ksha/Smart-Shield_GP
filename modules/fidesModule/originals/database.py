@@ -11,7 +11,7 @@ class Database(object):
     def __init__(self):
         self.r: Redis
 
-    def start(self, slip_conf):
+    def start(self, smartshield_conf):
         raise NotImplemented('Use real implementation for smartshield!')
 
 

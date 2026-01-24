@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import json
 from multiprocessing.queues import Queue
 import requests
@@ -8,8 +8,7 @@ import requests
 class Circllu:
     name = "Circl.lu"
     description = "Circl.lu lookups of IPs"
-    authors = ["Alya Gomaa"]
-
+     
     def __init__(self, db, pending_queries: Queue):
         self.db = db
         self.create_session()

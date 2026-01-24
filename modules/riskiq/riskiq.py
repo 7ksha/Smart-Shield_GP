@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import json
 import requests
 from requests.auth import HTTPBasicAuth
@@ -14,8 +14,7 @@ class RiskIQ(IModule):
     # Name: short name of the module. Do not use spaces
     name = "Risk IQ"
     description = "Module to get passive DNS info about IPs from RiskIQ"
-    authors = ["Alya Gomaa"]
-
+     
     def init(self):
         self.c1 = self.db.subscribe("new_ip")
         self.channels = {

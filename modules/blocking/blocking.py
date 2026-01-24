@@ -1,5 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+
 import platform
 import sys
 import os
@@ -26,7 +25,6 @@ class Blocking(IModule):
     # Name: short name of the module. Do not use spaces
     name = "Blocking"
     description = "Block malicious IPs connecting to this device"
-    authors = ["Sebastian Garcia, Alya Gomaa"]
 
     def init(self):
         self.c1 = self.db.subscribe("new_blocking")

@@ -1,0 +1,28 @@
+# Start from the original slips base
+FROM stratosphereips/slips:latest
+
+# Remove EVERYTHING from the original image
+WORKDIR /StratosphereLinuxIPS
+RUN rm -rf ./* .[!.]* || true
+
+# Copy ALL your smartshield files
+COPY . .
+
+# Fix any remaining slips references (important!)
+RUN find . -type f -name "*.py" -exec sed -i 's/from slips/from smartshield/g' {} + 2>/dev/null || true && \
+    find . -type f -name "*.py" -exec sed -i 's/import slips/import smartshield/g' {} + 2>/dev/null || true && \
+    find . -type f -name "*.sh" -exec sed -i 's/slips/smartshield/g' {} + 2>/dev/null || true
+
+# Ensure proper permissions
+RUN chmod +x smartshield.py run webinterface.sh kalipso.sh && \
+    chmod +x modules/*.py 2>/dev/null || true
+
+# Clean up any compilation artifacts
+RUN find . -name "*.pyc" -delete && \
+    find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
+# Expose port
+EXPOSE 55000
+
+# Set entrypoint to use smartshield.py
+CMD ["python3", "smartshield.py"]

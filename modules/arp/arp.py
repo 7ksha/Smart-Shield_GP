@@ -1,5 +1,4 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+
 import json
 import ipaddress
 import os
@@ -30,7 +29,6 @@ class ARP(IModule):
 
     name = "ARP"
     description = "Detect ARP attacks"
-    authors = ["Alya Gomaa"]
 
     def init(self):
         self.c1 = self.db.subscribe("new_arp")

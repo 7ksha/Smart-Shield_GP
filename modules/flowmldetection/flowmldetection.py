@@ -1,7 +1,7 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
+ 
 from typing import Optional
 
-# SPDX-License-Identifier: GPL-2.0-only
+ 
 import numpy
 from sklearn.linear_model import SGDClassifier
 from sklearn.preprocessing import StandardScaler
@@ -45,8 +45,7 @@ class FlowMLDetection(IModule):
     description = (
         "Train or test a Machine Learning model to detect malicious flows"
     )
-    authors = ["Sebastian Garcia"]
-
+     
     def init(self):
         # Subscribe to the channel
         self.c1 = self.db.subscribe("new_flow")

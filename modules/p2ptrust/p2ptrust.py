@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import os
 import shutil
 import signal
@@ -70,8 +70,7 @@ def validate_smartshield_data(message_data: str) -> (str, int):
 class Trust(IModule):
     name = "P2P Trust"
     description = "Enables sharing detection data with other smartshield instances"
-    authors = ["Dita", "Alya Gomaa"]
-    pigeon_port = 6668
+         pigeon_port = 6668
     rename_with_port = False
     smartshield_update_channel = "ip_info_change"
     p2p_data_request_channel = "p2p_data_request"

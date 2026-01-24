@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 from typing import (
     Dict,
     Tuple,
@@ -14,8 +14,7 @@ from dns.resolver import NXDOMAIN
 class Spamhaus:
     name = "Spamhaus"
     description = "Spamhaus lookups of IPs"
-    authors = ["Alya Gomaa"]
-
+     
     def __init__(self, db):
         self.db = db
         self._resolver = self._setup_resolver()

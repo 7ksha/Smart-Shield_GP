@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import sys
 import base64
 import time
@@ -33,8 +33,7 @@ class LeakDetector(IModule):
     # Name: short name of the module. Do not use spaces
     name = "Leak Detector"
     description = "Detect leaks of data in the traffic"
-    authors = ["Alya Gomaa"]
-
+     
     def init(self):
         # this module is only loaded when a pcap is given get the pcap path
         try:

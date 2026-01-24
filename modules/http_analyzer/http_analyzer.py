@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import asyncio
 import json
 import urllib
@@ -23,8 +23,7 @@ class HTTPAnalyzer(AsyncModule):
     # Name: short name of the module. Do not use spaces
     name = "HTTP Analyzer"
     description = "Analyze HTTP flows"
-    authors = ["Alya Gomaa"]
-
+     
     def init(self):
         self.c1 = self.db.subscribe("new_http")
         self.c2 = self.db.subscribe("new_weird")

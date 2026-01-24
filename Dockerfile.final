@@ -1,0 +1,49 @@
+# Start from the original slips image which has all dependencies
+FROM stratosphereips/slips:latest
+
+# Set working directory
+WORKDIR /StratosphereLinuxIPS
+
+# Remove ALL old files but keep installed dependencies
+# Use careful removal to not break Python packages
+RUN rm -rf ./* .[!.]* 2>/dev/null || true && \
+    # Keep only system-installed packages, remove Python site-packages that might be from old code
+    find /usr/local/lib/python3* -name "*slips*" -type d -exec rm -rf {} + 2>/dev/null || true
+
+# Copy ALL your smartshield files
+COPY . .
+
+# Reinstall Python packages from your requirements.txt
+# This ensures all dependencies match your code
+RUN pip3 install --no-cache-dir --upgrade pip && \
+    pip3 install --no-cache-dir -r install/requirements.txt && \
+    # Also install in development mode if needed
+    pip3 install --no-cache-dir -e . 2>/dev/null || true
+
+# Fix Python imports - rename slips to smartshield in all files
+RUN find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.txt" -o -name "*.md" -o -name "*.json" -o -name "*.yaml" -o -name "*.yml" \) \
+    -exec sed -i 's/import slips/import smartshield/g' {} + 2>/dev/null || true && \
+    find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.txt" -o -name "*.md" -o -name "*.json" -o -name "*.yaml" -o -name "*.yml" \) \
+    -exec sed -i 's/from slips/from smartshield/g' {} + 2>/dev/null || true && \
+    find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.txt" -o -name "*.md" -o -name "*.json" -o -name "*.yaml" -o -name "*.yml" \) \
+    -exec sed -i 's/slips\./smartshield\./g' {} + 2>/dev/null || true
+
+# Fix file permissions
+RUN chmod +x smartshield.py run webinterface.sh kalipso.sh && \
+    chmod +x modules/*.py 2>/dev/null || true
+
+# Rebuild any Go components if they exist
+RUN if [ -d "p2p4smartshield" ] && [ -f "p2p4smartshield/go.mod" ]; then \
+        cd p2p4smartshield && \
+        go build; \
+    fi
+
+# Clean up
+RUN find . -name "*.pyc" -delete && \
+    find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+
+# Expose the same port
+EXPOSE 55000
+
+# Set the new entrypoint
+CMD ["python3", "smartshield.py"]

@@ -1,5 +1,5 @@
-# SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
-# SPDX-License-Identifier: GPL-2.0-only
+ 
+ 
 import base64
 import binascii
 import hashlib
@@ -32,8 +32,7 @@ IS_IN_A_DOCKER_CONTAINER = os.environ.get("IS_IN_A_DOCKER_CONTAINER", False)
 class Utils(object):
     name = "utils"
     description = "Common functions used by different modules of smartshield."
-    authors = ["Alya Gomaa"]
-
+     
     def __init__(self):
         self.home_network_ranges_str = (
             "192.168.0.0/16",
