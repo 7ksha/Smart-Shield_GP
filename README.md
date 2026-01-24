@@ -12,14 +12,8 @@ smartshield v1.1.16
 - [Configuration](#configuration)
 - [Features](#features)
 - [Contributing](#contributing)
-- [Documentation](#documentation)
 - [Troubleshooting](#troubleshooting)
-- [License](#license)
-- [Credits](#credits)
-- [Changelog](#changelog)
-- [Roadmap](#roadmap)
-- [Demos](#demos)
-- [Funding](#funding)
+
 
 
 # smartshield: Behavioral Machine Learning-Based Intrusion Prevention System
