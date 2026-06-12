@@ -48,21 +48,6 @@ smartshield v1.1.16
 
 
 # SmartShield: Behavioral Machine Learning-Based Intrusion Prevention System
-
-> **About this project / Attribution.** SmartShield is a graduation project that
-> builds on **[Stratosphere Linux IPS (SLIPS)](https://github.com/stratosphereips/StratosphereLinuxIPS)**,
-> the free-software behavioral IPS created by Sebastian Garcia, Alya Gomaa,
-> Kamila Babayeva and contributors at the **Stratosphere Laboratory, AIC, FEL,
-> Czech Technical University in Prague**. SLIPS is licensed under the
-> **GNU GPL v2.0**, and so is this derivative work — the upstream copyright and
-> license are preserved (see `LICENSES/` and `NOTICE`).
->
-> Our team's contribution is an **OT/ICS (industrial / factory) detection layer**
-> on top of SLIPS: a new `ot_detection` module, OT-protocol Zeek scripts
-> (`zeek-scripts/ot_protocols.zeek`), Modbus/DNP3/S7Comm handling, OT-tuned
-> detection thresholds, and factory-deployment configuration. See
-> [*Our contributions vs. upstream*](#our-contributions-vs-upstream) below.
->
 > Team: Mostafa Hamada, Zeyad Magdy, Ahmed Ashraf, Karim Walid — supervised by
 > Dr. Islam El-Maddah.
 
