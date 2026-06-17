@@ -158,29 +158,6 @@ class ThreatLevel(Enum):
     HIGH = 0.8
     CRITICAL = 1
 
-
-    # ── OT / ICS Detection Evidence Types ────────────────────────────
-    OT_MODBUS_SCAN = auto()               # port 502 scan across PLCs
-    OT_MODBUS_WRITE_COILS = auto()        # unauthorized coil/register write
-    OT_MODBUS_CONNECTION_FLOOD = auto()   # > threshold simultaneous Modbus conns
-    OT_MODBUS_ILLEGAL_FUNCTION = auto()   # malformed / illegal function code
-    OT_S7COMM_JOB_FLOOD = auto()          # Siemens S7 job request flood
-    OT_S7COMM_UNAUTHORIZED_READ = auto()  # S7 read from unknown source
-    OT_S7COMM_UNAUTHORIZED_WRITE = auto() # S7 write from unknown source
-    OT_S7COMM_PLC_STOP = auto()           # S7 STOP command sent
-    OT_DNP3_FLOOD = auto()                # DNP3 fragment/request flood
-    OT_DNP3_UNAUTHORIZED_FUNCTION = auto()# DNP3 unsupported/illegal function
-    OT_PLC_MODE_SWITCH = auto()           # rapid PLC RUN/STOP switching
-    OT_PROTOCOL_ANOMALY = auto()          # generic OT protocol anomaly
-    OT_VALVE_CYCLING = auto()             # rapid valve open/close commands
-    OT_MOTOR_CYCLING = auto()             # rapid motor start/stop commands
-    OT_NTP_TIME_SYNC_ATTACK = auto()      # spoofed NTP response
-    OT_PTP_SPOOFING = auto()              # IEEE 1588 grandmaster spoofing
-    OT_PROFINET_DCP_FLOOD = auto()        # PROFINET DCP discovery flood
-    OT_CIP_MESSAGE_FLOOD = auto()         # EtherNet/IP CIP explicit msg flood
-    OT_UNAUTHORIZED_MODBUS_ACCESS = auto()# Modbus from non-whitelisted host
-    OT_WATCHDOG_MANIPULATION = auto()     # watchdog timer disabled/manipulated
-
     def __str__(self):
         return self.name.lower()
 

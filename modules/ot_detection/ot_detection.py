@@ -249,12 +249,19 @@ class OTDetection(IModule):
         Called for every network flow.
         """
         try:
-            flow = json.loads(raw)
+            data = json.loads(raw)
         except (json.JSONDecodeError, TypeError):
             return
 
-        profileid: str = flow.get("profileid", "")
-        twid: str = flow.get("twid", "")
+        # new_flow messages wrap the actual flow fields in a nested "flow"
+        # dict (asdict(flow)), while profileid/twid live at the top level.
+        # See profile_handler.add_flow(): {"profileid","twid","flow":{...}}.
+        profileid: str = data.get("profileid", "")
+        twid: str = data.get("twid", "")
+        flow: dict = data.get("flow", {})
+        if not isinstance(flow, dict):
+            return
+
         saddr: str = flow.get("saddr", "")
         daddr: str = flow.get("daddr", "")
         dport: int = int(flow.get("dport", 0) or 0)
@@ -749,20 +756,23 @@ class OTDetection(IModule):
         published by ot_protocols.zeek.
         """
         try:
-            notice = json.loads(raw)
+            data = json.loads(raw)
         except (json.JSONDecodeError, TypeError):
             return
 
-        note = notice.get("note", "")
-        srcip = notice.get("src", "")
-        dstip = notice.get("dst", "")
-        uid = notice.get("uid", "")
-        ts = notice.get("ts", "")
-        profileid = notice.get("profileid", "")
-        twid = notice.get("twid", "")
-
-        if not profileid:
+        # new_notice wraps the notice fields in a nested "flow" dict, with
+        # profileid/twid at the top level (see profile_handler.add_out_notice).
+        profileid = data.get("profileid", "")
+        twid = data.get("twid", "")
+        flow: dict = data.get("flow", {})
+        if not (profileid and isinstance(flow, dict)):
             return
+
+        note = flow.get("note", "")
+        srcip = flow.get("saddr", "")
+        dstip = flow.get("daddr", "")
+        uid = flow.get("uid", "")
+        ts = flow.get("starttime", "")
 
         # OT Zeek scripts emit "OT::PLCModeSwitch" notices
         if "PLCModeSwitch" in note:
