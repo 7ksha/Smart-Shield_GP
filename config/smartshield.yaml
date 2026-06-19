@@ -529,6 +529,13 @@ ot_detection:
   # Time window (in seconds) for flood detection counters.
   flood_window_seconds: 60
 
+  # Single-connection flood detection (catches floods that ride ONE long-lived
+  # TCP/UDP connection, which Zeek logs as a single flow). An OT-port flow is
+  # flagged when it carries at least connection_min_flood_packets AND sustains
+  # at least packet_rate_threshold packets/second.
+  connection_min_flood_packets: 200
+  packet_rate_threshold: 50
+
   # PLC mode-switch: how many RUN/STOP commands within 60s = attack
   plc_mode_switch_threshold: 5
 

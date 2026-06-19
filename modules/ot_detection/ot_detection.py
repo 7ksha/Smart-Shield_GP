@@ -201,6 +201,28 @@ class OTDetection(IModule):
                                       "60")
         self._flood_window = int(raw)
 
+        raw = conf.read_configuration("ot_detection",
+                                      "connection_min_flood_packets", "200")
+        self._min_flood_packets = int(raw)
+
+        raw = conf.read_configuration("ot_detection",
+                                      "packet_rate_threshold", "50")
+        self._packet_rate_threshold = float(raw)
+
+    @staticmethod
+    def _ot_port_evidence(dport: int):
+        """Map an OT destination port to its flood EvidenceType + label."""
+        mapping = {
+            MODBUS_PORT: (EvidenceType.OT_MODBUS_CONNECTION_FLOOD, "Modbus"),
+            S7COMM_PORT: (EvidenceType.OT_S7COMM_JOB_FLOOD, "S7Comm"),
+            DNP3_PORT: (EvidenceType.OT_DNP3_FLOOD, "DNP3"),
+            PROFINET_DCP_PORT: (EvidenceType.OT_PROFINET_DCP_FLOOD, "PROFINET"),
+            CIP_PORT: (EvidenceType.OT_CIP_MESSAGE_FLOOD, "CIP"),
+            NTP_PORT: (EvidenceType.OT_NTP_TIME_SYNC_ATTACK, "NTP"),
+            PTP_PORT: (EvidenceType.OT_PTP_SPOOFING, "PTP"),
+        }
+        return mapping.get(dport, (EvidenceType.OT_PROTOCOL_ANOMALY, "OT"))
+
     @staticmethod
     def _load_ot_devices(conf) -> Set[str]:
         """
@@ -274,6 +296,47 @@ class OTDetection(IModule):
             return
 
         now = time.time()
+
+        # ── High-volume / high-rate single-connection flood ──────────────
+        # A flood that rides ONE long-lived TCP/UDP connection is logged by
+        # Zeek as a single conn.log flow, so the per-connection counters
+        # below never reach their thresholds. Catch it using the packet
+        # counts and duration Zeek already records for the flow.
+        if dport in OT_PORTS or dport in (NTP_PORT, PTP_PORT):
+            flow_pkts = (int(flow.get("spkts", 0) or 0)
+                         + int(flow.get("dpkts", 0) or 0))
+            try:
+                dur = float(flow.get("dur", 0) or 0)
+            except (TypeError, ValueError):
+                dur = 0.0
+            rate = (flow_pkts / dur) if dur > 0 else float("inf")
+            if (flow_pkts >= self._min_flood_packets
+                    and rate >= self._packet_rate_threshold):
+                alert_key = f"vol_flood:{saddr}:{daddr}:{dport}:{twid}"
+                if alert_key not in self._alerted:
+                    self._alerted.add(alert_key)
+                    ev_type, proto_name = self._ot_port_evidence(dport)
+                    rate_str = (f"{rate:.0f} pkts/s" if dur > 0
+                                else "unknown rate")
+                    self._set_evidence(
+                        ev_type=ev_type,
+                        threat_level=ThreatLevel.HIGH,
+                        confidence=0.9,
+                        description=(
+                            f"{proto_name} request flood from {saddr} to "
+                            f"{daddr}:{dport}: {flow_pkts} packets in a single "
+                            f"connection ({rate_str}) — high-volume {proto_name} "
+                            f"session targeting an OT service."
+                        ),
+                        profileid=profileid,
+                        twid=twid,
+                        srcip=saddr,
+                        dstip=daddr,
+                        uid=[uid],
+                        timestamp=timestamp,
+                        port=dport,
+                        proto=Proto.UDP if proto == "udp" else Proto.TCP,
+                    )
 
         # ── Modbus flood detection ─────────────────────────────────────────
         if dport == MODBUS_PORT and proto == "tcp":
