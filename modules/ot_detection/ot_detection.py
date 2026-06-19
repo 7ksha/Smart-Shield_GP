@@ -94,18 +94,24 @@ class OTDetection(IModule):
     # ── Lifecycle ────────────────────────────────────────────────────────────
 
     def init(self):
-        self.c_flow = self.db.subscribe("new_flow")
-        self.c_notice = self.db.subscribe("new_notice")
-        self.c_modbus = self.db.subscribe("new_modbus")
-        self.c_s7 = self.db.subscribe("new_s7comm")
-        self.c_dnp3 = self.db.subscribe("new_dnp3")
-        self.channels = {
-            "new_flow": self.c_flow,
-            "new_notice": self.c_notice,
-            "new_modbus": self.c_modbus,
-            "new_s7comm": self.c_s7,
-            "new_dnp3": self.c_dnp3,
-        }
+        # db.subscribe() returns False for any channel that isn't registered
+        # in the database's supported_channels. Calling get_msg() on a False
+        # handle raises 'bool' object has no attribute 'get_message' and kills
+        # the module, so only keep channels that subscribed successfully.
+        wanted = [
+            "new_flow", "new_notice", "new_modbus", "new_s7comm", "new_dnp3",
+        ]
+        self.channels = {}
+        for ch in wanted:
+            handle = self.db.subscribe(ch)
+            if handle:
+                self.channels[ch] = handle
+            else:
+                self.print(
+                    f"Channel '{ch}' is not available (not registered) - "
+                    f"skipping it.",
+                    verbose=1,
+                )
 
         self._read_configuration()
 
@@ -143,23 +149,23 @@ class OTDetection(IModule):
 
     def main(self):
         # Process Zeek conn.log flows
-        if msg := self.get_msg("new_flow"):
+        if "new_flow" in self.channels and (msg := self.get_msg("new_flow")):
             self._handle_flow(msg["data"])
 
         # Process Zeek notice.log entries
-        if msg := self.get_msg("new_notice"):
+        if "new_notice" in self.channels and (msg := self.get_msg("new_notice")):
             self._handle_notice(msg["data"])
 
         # Process Modbus-specific events (from zeek OT parser)
-        if msg := self.get_msg("new_modbus"):
+        if "new_modbus" in self.channels and (msg := self.get_msg("new_modbus")):
             self._handle_modbus(msg["data"])
 
         # Process S7Comm events
-        if msg := self.get_msg("new_s7comm"):
+        if "new_s7comm" in self.channels and (msg := self.get_msg("new_s7comm")):
             self._handle_s7comm(msg["data"])
 
         # Process DNP3 events
-        if msg := self.get_msg("new_dnp3"):
+        if "new_dnp3" in self.channels and (msg := self.get_msg("new_dnp3")):
             self._handle_dnp3(msg["data"])
 
     # ── Configuration ────────────────────────────────────────────────────────
