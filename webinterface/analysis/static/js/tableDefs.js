@@ -1,4 +1,6 @@
- 
+// SPDX-FileCopyrightText: 2021 Sebastian Garcia <sebastian.garcia@agents.fel.cvut.cz>
+//SPDX-License-Identifier: GPL-2.0-only
+
 const custom_dom = "<'row'<'col-lg-8 col-md-8 col-xs-12'B><'col-lg-4 col-md-4 col-xs-12'fl>>" +
            "<'row'<'col-sm-12'tr>>" +
            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"
@@ -29,7 +31,7 @@ let analysisSubTableDefs = {
         bInfo: false,
         paging: false,
         searching: false,
-        scrollY: "25vh", // hardcoded length of opened datatable
+        scrollY: "25vh",
         columns: [
             { data: 'timestamp'},
             { data: 'confidence'},
@@ -136,19 +138,23 @@ let analysisTableDefs = {
         ]
     },
 
+    // ********** UPDATED ALERTS TABLE **********
     "alerts": {
         "bDestroy": true,
-        select: true,
+        // 'select' removed to avoid missing extension error; re-enable only if Select extension is loaded
         dom: custom_dom,
         scrollX: false,
         searching: true,
         columns: [
-            { data: 'alert' ,
-            "className":"r"},
-            { data: 'profileid'},
-            { data: 'timewindow'},
-            { data: 'evidence_count'}
-
+            { data: 'alert', "className": "r" },
+            { data: 'profileid' },
+            { data: 'timewindow' },
+            { data: 'info_count', title: 'Info' },
+            { data: 'low_count', title: 'Low' },
+            { data: 'medium_count', title: 'Medium' },
+            { data: 'high_count', title: 'High' },
+            { data: 'critical_count', title: 'Critical' },
+            { data: 'accumulated_threat_level', title: 'Accumulated' }
         ]
     },
 
@@ -176,7 +182,7 @@ let analysisTableDefs = {
         destroy: true,
         dom: '<"top"f>rt',
         scrollX: false,
-        scrollY: "78vh", // hardcoded height to fit the page
+        scrollY: "78vh",
         scrollCollapse: true,
         paging: false,
         info: false,
@@ -222,3 +228,4 @@ let analysisTableDefs = {
 }
 
 export { analysisTableDefs, analysisSubTableDefs };
+

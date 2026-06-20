@@ -120,4 +120,4 @@ redef digest_salt = "Please change this value.";
 # ── SmartShield OT/ICS Detection Scripts ────────────────────────────────────
 # Load OT protocol parsers and detection logic for factory deployments.
 # This adds Modbus, DNP3, S7Comm, PROFINET, and time-sync attack detection.
-@load ./ot_protocols.zeek
+# @load ./ot_protocols.zeek
