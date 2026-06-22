@@ -57,22 +57,15 @@
         <a class="nav-link active" type="button" id="nav-hotkeys-tab" data-bs-toggle="tab" data-bs-target="#nav-hotkeys" role="tab"
           aria-controls="nav-hotkeys" aria-selected="true">
           Analysis
-          <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" type="button" id="nav-general-tab" data-bs-toggle="tab" data-bs-target="#nav-general" role="tab"
           aria-controls="nav-general" aria-selected="false">                   
           General
-          <!-- <i class="fa-solid fa-circle-info"></i>  -->
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" type="button" id="nav-documentation-tab" data-bs-toggle="tab" data-bs-target="#nav-documentation" role="tab"
-        aria-controls="nav-documentation" aria-selected="false">
-          Documentation
-        </a>
-      </li>
+      <!-- Documentation tab removed -->
       <li class="nav-item ms-auto">
         <a type="button" id="changedb_button" class="nav-link btn-primary" data-toggle="modal" data-target="#modal_choose_redis" style=" color: #0d6efd!important">
           <i class="fa-solid fa-database"></i>
@@ -95,9 +88,7 @@
       <div class="tab-pane fade" id="nav-general" role="tabpanel" aria-labelledby="nav-general-tab">
         {% include 'general.html' %}
       </div>
-      <div class="tab-pane fade" id="nav-documentation" role="tabpanel" aria-labelledby="nav-documentation-tab">
-        {% include 'documentation.html' %}
-      </div>
+      <!-- Documentation pane removed -->
     </div>
     <div class="modal " id="modal_choose_redis" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel">
       <div class="modal-dialog" role="document">

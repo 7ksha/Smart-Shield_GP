@@ -1,5 +1,3 @@
- 
- 
 import asyncio
 import datetime
 import json
@@ -98,7 +96,8 @@ class UpdateManager(IModule):
             if not os.path.exists(risk_iq_credentials_path):
                 return
 
-            with open(risk_iq_credentials_path, "r") as f:
+            # Fixed: open with utf-8 and ignore errors
+            with open(risk_iq_credentials_path, "r", encoding='utf-8', errors='ignore') as f:
                 self.riskiq_email = f.readline().replace("\n", "")
                 self.riskiq_key = f.readline().replace("\n", "")
 
@@ -144,7 +143,8 @@ class UpdateManager(IModule):
          a dict with feed info
         """
         try:
-            with open(feeds_path, "r") as feeds_file:
+            # Fixed: open with utf-8 and ignore errors
+            with open(feeds_path, "r", encoding='utf-8', errors='ignore') as feeds_file:
                 feeds: str = feeds_file.read()
         except FileNotFoundError:
             self.print(
@@ -215,7 +215,8 @@ class UpdateManager(IModule):
         # consider it 'unknown'.
         # in ports_info_filepath  we have a list of organizations range/ip and
         # the port it's known to use
-        with open(ports_info_filepath, "r") as f:
+        # Fixed: open with utf-8 and ignore errors
+        with open(ports_info_filepath, "r", encoding='utf-8', errors='ignore') as f:
             line_number = 0
             while True:
                 line = f.readline()
@@ -272,13 +273,20 @@ class UpdateManager(IModule):
                 self.read_ports_info(file_path)
 
             elif "services.csv" in file_path:
-                with open(file_path, "r") as f:
+                # Fixed: open with utf-8 and ignore errors
+                with open(file_path, "r", encoding='utf-8', errors='ignore') as f:
                     for line in f:
-                        name = line.split(",")[0]
-                        port = line.split(",")[1]
-                        proto = line.split(",")[2]
-                        # descr = line.split(',')[3]
-                        self.db.set_port_info(f"{str(port)}/{proto}", name)
+                        line = line.strip()
+                        # Skip empty lines and comments
+                        if not line or line.startswith('#') or line.startswith(';'):
+                            continue
+                        parts = line.split(',')
+                        if len(parts) < 3:
+                            continue
+                        name = parts[0].strip()
+                        port = parts[1].strip()
+                        proto = parts[2].strip()
+                        self.db.set_port_info(f"{port}/{proto}", name)
 
             # Store the new hash of file in the database
             file_info = {"hash": self.new_hash}
@@ -502,7 +510,8 @@ class UpdateManager(IModule):
 
         malicious_ssl_certs = {}
 
-        with open(full_path) as ssl_feed:
+        # Fixed: open with utf-8 and ignore errors
+        with open(full_path, "r", encoding='utf-8', errors='ignore') as ssl_feed:
             # Ignore comments and find the description column if possible
             description_column = None
             while True:
@@ -771,7 +780,8 @@ class UpdateManager(IModule):
         try:
             malicious_ja3_dict = {}
 
-            with open(ja3_feed_path) as ja3_feed:
+            # Fixed: open with utf-8 and ignore errors
+            with open(ja3_feed_path, "r", encoding='utf-8', errors='ignore') as ja3_feed:
                 # Ignore comments and find the description column if possible
                 description_column = None
                 while True:
@@ -922,7 +932,8 @@ class UpdateManager(IModule):
 
         if "rstcloud" in link_to_download:
             malicious_ips_dict = {}
-            with open(ti_file_path) as feed:
+            # Fixed: open with utf-8 and ignore errors
+            with open(ti_file_path, "r", encoding='utf-8', errors='ignore') as feed:
                 self.print(
                     f"Reading next lines in the file "
                     f"{ti_file_path} for IoC",
@@ -951,7 +962,8 @@ class UpdateManager(IModule):
 
         if "hole.cert.pl" in link_to_download:
             malicious_domains_dict = {}
-            with open(ti_file_path) as feed:
+            # Fixed: open with utf-8 and ignore errors
+            with open(ti_file_path, "r", encoding='utf-8', errors='ignore') as feed:
                 self.print(
                     f"Reading next lines in the file {ti_file_path}"
                     f" for IoC",
@@ -1158,7 +1170,8 @@ class UpdateManager(IModule):
         returns a tuple with the index of the column in the feed with the
         description, the data, line_fields, and separator
         """
-        with open(ti_file_path) as feed:
+        # Fixed: open with utf-8 and ignore errors
+        with open(ti_file_path, "r", encoding='utf-8', errors='ignore') as feed:
             # find the description column if possible
             description_column = None
             header_line_found = False
@@ -1411,7 +1424,8 @@ class UpdateManager(IModule):
         self.malicious_domains_dict = {}
         self.malicious_ip_ranges = {}
 
-        feed: IO = open(ti_file_path)
+        # Fixed: open with utf-8 and ignore errors
+        feed: IO = open(ti_file_path, "r", encoding='utf-8', errors='ignore')
         while line := feed.readline():
             if self.is_ignored_line(line):
                 continue

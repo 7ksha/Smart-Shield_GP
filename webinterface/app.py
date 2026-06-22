@@ -1,10 +1,8 @@
- 
- 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from webinterface.auth import init_auth
 
 from smartshield_files.common.parsers.config_parser import ConfigParser
-from .database.database import db
+from .database.database import db, get_current_port, set_db_port
 from .database.signals import message_sent
 from .analysis.analysis import analysis
 from .general.general import general
@@ -21,6 +19,19 @@ def create_app():
 
 
 app = create_app()
+
+
+@app.before_request
+def ensure_latest_db():
+    # Skip static files and login page to avoid unnecessary checks
+    if request.path.startswith('/static') or request.path.startswith('/login'):
+        return
+
+    latest_servers = get_open_redis_ports_in_order()
+    if latest_servers:
+        latest_port = int(latest_servers[-1]['redis_port'])
+        if get_current_port() != latest_port:
+            set_db_port(latest_port)
 
 
 @app.route("/redis")

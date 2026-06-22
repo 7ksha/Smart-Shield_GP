@@ -1,0 +1,7 @@
+smartshield version: 1.1.16
+File: dataset/test1-normal.nfdump
+Branch: None
+Commit: None
+Command: smartshield.py -f dataset/test1-normal.nfdump -o output/test1-normal
+smartshield start date: 2026/06/22 09:52:36.904398
+Zeek version: None

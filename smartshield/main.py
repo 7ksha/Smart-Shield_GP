@@ -1,5 +1,4 @@
  
- 
 import contextlib
 import json
 import multiprocessing
@@ -420,6 +419,10 @@ class Main:
         if not hasattr(self, "total_flows"):
             self.total_flows = self.db.get_total_flows()
 
+        # Avoid division by zero if no flows are recorded yet
+        if self.total_flows == 0:
+            return "Analyzed Flows: 0%. "
+
         flows_percentage = int(
             (self.db.get_processed_flows_so_far() / self.total_flows) * 100
         )
@@ -676,4 +679,4 @@ class Main:
             # comes here if zeek terminates while smartshield is still working
             pass
 
-        self.proc_man.shutdown_gracefully()
+        self.proc_man.shutdown_gracefully() 

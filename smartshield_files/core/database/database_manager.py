@@ -1,5 +1,3 @@
- 
- 
 import json
 import os
 import shutil
@@ -873,7 +871,11 @@ class DBManager:
         return self.rdb.add_software_to_profile(*args, **kwargs)
 
     def get_total_flows(self, *args, **kwargs):
-        return int(self.rdb.get_total_flows(*args, **kwargs))
+        """Returns the total number of flows. Returns 0 if not set (None)."""
+        val = self.rdb.get_total_flows(*args, **kwargs)
+        if val is None:
+            return 0
+        return int(val)
 
     def increment_processed_flows(self, *args, **kwargs):
         return self.rdb.increment_processed_flows(*args, **kwargs)

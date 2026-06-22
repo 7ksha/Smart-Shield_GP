@@ -1,5 +1,3 @@
- 
- 
 from typing import (
     Dict,
     Optional,
@@ -22,21 +20,28 @@ class Database(object):
     """
 
     def __init__(self):
-        # connect to the db manager
-        self.db: DBManager = self.get_db_manager_obj()
+        # get the latest port from running_smartshield_info.txt
+        latest = get_open_redis_ports_in_order()
+        if latest:
+            port = int(latest[-1]['redis_port'])
+        else:
+            port = None
+        self.db: DBManager = self.get_db_manager_obj(port)
+        self.current_port = port
 
     def set_db(self, port):
         """changes the redis db we're connected to"""
         self.db = self.get_db_manager_obj(port)
+        if self.db:
+            self.current_port = port
 
-    def get_db_manager_obj(self, port: int = False) -> Optional[DBManager]:
+    def get_db_manager_obj(self, port: int = None) -> Optional[DBManager]:
         """
         Connects to redis db through the DBManager
         connects to the latest opened redis server if no port is given
         """
-        if not port:
-            # connect to the last opened port if no port is chosen by the
-            # user
+        if port is None:
+            # connect to the last opened port if no port is chosen by the user
             last_opened_port = get_open_redis_ports_in_order()[-1][
                 "redis_port"
             ]
@@ -57,7 +62,7 @@ class Database(object):
                 output_dir,
                 port,
                 conf,
-                os.getpid(),  # main_pid doesnt matter here
+                os.getpid(),  # main_pid doesn't matter here
                 start_redis_server=False,
                 start_sqlite=True,
                 flush_db=False,
@@ -68,6 +73,16 @@ class Database(object):
 
 db_obj = Database()
 db: DBManager = db_obj.db
+
+
+def set_db_port(port):
+    """sets the redis port used by the web interface"""
+    db_obj.set_db(port)
+
+
+def get_current_port():
+    """returns the current redis port used by the web interface"""
+    return db_obj.current_port
 
 
 @message_sent.connect
