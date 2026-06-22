@@ -209,14 +209,14 @@ LICENSES/ · NOTICE · CITATION.cff   License & attribution
 
 This is a graduation project — honest about what works:
 
-- ✅ **Working:** flood/scan detection on OT ports (validated against real Modbus and
+- **Working:** flood/scan detection on OT ports (validated against real Modbus and
   DNP3 captures), OT-safe blocking, web auth, Redis persistence, Syslog/webhook export.
-- ⚠️ **Partial:** deep per-message detections (Modbus write-coils, illegal function,
+- **Partial:** deep per-message detections (Modbus write-coils, illegal function,
   S7 STOP, PLC mode-switch, watchdog/valve/motor) are implemented in the module but
   require the Zeek OT parser (`zeek-scripts/ot_protocols.zeek`) to publish per-PDU
   events on the `new_modbus` / `new_s7comm` / `new_dnp3` channels. Wiring that
   publisher is the main remaining task.
-- ❌ **Out of scope:** application/infrastructure DoS such as OPC-UA memory exhaustion,
+- **Out of scope:** application/infrastructure DoS such as OPC-UA memory exhaustion,
   historian/HMI/alarm floods, and switch MAC/STP attacks.
 
 ## Team
