@@ -226,7 +226,4 @@ Supervisor: Dr. Islam El-Maddah
 
 ## License
 
-GNU General Public License v2.0 — see [`LICENSES/`](LICENSES). SmartShield is a
-derivative of [SLIPS](https://github.com/stratosphereips/StratosphereLinuxIPS)
-(© Stratosphere Laboratory, CTU Prague), distributed under the same license. See
-[`NOTICE`](NOTICE) for full attribution.
+GNU General Public License v2.0 — see [`LICENSES/`](LICENSES). 
