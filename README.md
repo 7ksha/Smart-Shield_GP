@@ -8,20 +8,13 @@ traffic, detects attacks against industrial protocols (Modbus, S7Comm, DNP3,
 PROFINET, CIP, NTP/PTP), and can block attackers via `iptables` — with an **OT-safe**
 guarantee that PLCs, HMIs, and SCADA servers are *never* auto-blocked.
 
-> **Attribution.** SmartShield is built on **[Stratosphere Linux IPS (SLIPS)](https://github.com/stratosphereips/StratosphereLinuxIPS)**,
-> the free-software behavioral IPS by the Stratosphere Laboratory, FEL, Czech Technical
-> University in Prague. SLIPS is licensed under **GNU GPL v2.0**, and so is this
-> derivative work. The original copyright, license, and authorship are preserved — see
-> [`NOTICE`](NOTICE), [`LICENSES/`](LICENSES), and [`CITATION.cff`](CITATION.cff). The
-> OT/ICS detection layer is this project's contribution.
-
 ---
 
 ## Table of Contents
 
 - [What it does](#what-it-does)
 - [Architecture](#architecture)
-- [What we added (vs. upstream SLIPS)](#what-we-added-vs-upstream-slips)
+- [What we added ](#what-we-added)
 - [OT/ICS attacks detected](#otics-attacks-detected)
 - [Quick start](#quick-start)
 - [Configuration](#configuration)
@@ -77,7 +70,7 @@ publishes each flow on Redis channels → **detection modules** subscribe and pr
 threat crosses the threshold → **blocking**, **export**, and the **web interface**
 act on it.
 
-## What we added (vs. upstream SLIPS)
+## What we added
 
 | Area | Contribution | Where |
 |---|---|---|
@@ -91,8 +84,7 @@ act on it.
 
 Everything else — the profiler, evidence/alert pipeline, Redis/SQLite storage, web
 interface, Kalipso TUI, and the IT-side detection modules (Threat Intelligence,
-PortScan, RNN C&C, Flow Alerts, ARP, HTTP Analyzer, and others) — is inherited from
-upstream SLIPS.
+PortScan, RNN C&C, Flow Alerts, ARP, HTTP Analyzer, and others) — made semester 1
 
 ## OT/ICS attacks detected
 
